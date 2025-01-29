@@ -84,7 +84,7 @@ class Application {
         m1.show(); // Error: m1.show() refers to the instance method in Mother
     }
 }
-
+*/
 
 
 
@@ -113,7 +113,6 @@ class Application {
     }
 }
 
-*/
 
 
 

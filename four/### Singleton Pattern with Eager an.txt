@@ -1,0 +1,103 @@
+### **Singleton Pattern with Eager and Lazy Initialization in Java**  
+
+---
+
+### **1️⃣ Eager Initialization (Eager Singleton)**
+In this approach, the instance is **created at class loading time**, even if it is **never used**.
+
+#### **Eager Singleton Code**
+```java
+class EagerSingleton {
+    // Instance is created at the time of class loading
+    private static final EagerSingleton INSTANCE = new EagerSingleton();
+
+    // Private constructor prevents instantiation from other classes
+    private EagerSingleton() {}
+
+    // Public method to provide global access
+    public static EagerSingleton getInstance() {
+        return INSTANCE;
+    }
+}
+```
+#### **🔴 Problem with Eager Initialization**
+- **Memory Waste**: If the instance is never used, it still occupies memory.
+- **Unnecessary Object Creation**: Even if the singleton is not needed, it gets created.
+
+#### **✅ Solution for Eager Singleton**
+Use **lazy initialization** instead, or use the **static inner class approach**, which delays object creation until needed.
+
+```java
+class EagerSingletonSolution {
+    private static class Holder {
+        private static final EagerSingletonSolution INSTANCE = new EagerSingletonSolution();
+    }
+
+    private EagerSingletonSolution() {}
+
+    public static EagerSingletonSolution getInstance() {
+        return Holder.INSTANCE;
+    }
+}
+```
+> **Why?** The instance is created only when `getInstance()` is called for the first time.
+
+---
+
+### **2️⃣ Lazy Initialization (Lazy Singleton)**
+In **lazy initialization**, the instance is **created only when needed**.
+
+#### **Lazy Singleton Code**
+```java
+class LazySingleton {
+    // No instance created initially
+    private static LazySingleton instance;
+
+    // Private constructor prevents instantiation
+    private LazySingleton() {}
+
+    // Public method to provide access to the instance
+    public static LazySingleton getInstance() {
+        if (instance == null) { // Instance created only when required
+            instance = new LazySingleton();
+        }
+        return instance;
+    }
+}
+```
+
+#### **🔴 Problem with Lazy Initialization**
+- **Thread Safety Issue**: If multiple threads access `getInstance()` at the same time, **multiple instances** can be created.
+  
+#### **✅ Solution for Lazy Singleton**
+Use **synchronized** or **double-checked locking** to prevent multiple threads from creating multiple instances.
+
+```java
+class ThreadSafeLazySingleton {
+    private static volatile ThreadSafeLazySingleton instance;
+
+    private ThreadSafeLazySingleton() {}
+
+    public static ThreadSafeLazySingleton getInstance() {
+        if (instance == null) { // First check
+            synchronized (ThreadSafeLazySingleton.class) {
+                if (instance == null) { // Second check (inside synchronized block)
+                    instance = new ThreadSafeLazySingleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+> **Why?** This ensures **thread safety** and **performance optimization** by synchronizing only when the instance is first created.
+
+---
+
+### **Final Comparison**
+| Approach | Problem | Solution |
+|----------|---------|----------|
+| **Eager Singleton** | Wastes memory if instance is never used | Use **static inner class** for lazy loading |
+| **Lazy Singleton** | Not thread-safe, multiple instances in multithreading | Use **synchronized block** or **double-checked locking** |
+
+Would you like additional variations, such as an **Enum Singleton** or implementations in different languages? 🚀

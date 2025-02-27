@@ -6,7 +6,7 @@ public class LE0 {
         this.name = name;
         this.speed = speed;
     }
-
+//
     public String getName() {
         return name;
     }

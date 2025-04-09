@@ -1,4 +1,4 @@
-package lab6;
+package six;
 
 public class Rum extends Decorator{
     Rum( Offering offering){

@@ -1,4 +1,4 @@
-package lab6;
+package six;
 
 public class Gin extends Decorator{
     void Gin( Offering offering){

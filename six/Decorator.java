@@ -1,4 +1,4 @@
-package lab6;
+package six;
 
 public abstract class Decorator extends Offering{
     Offering offering;
